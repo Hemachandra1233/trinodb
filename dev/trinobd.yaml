@@ -1,0 +1,80 @@
+# https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: trinodb-dev
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: trinodb-dev
+
+  
+  project: default
+  source:
+    repoURL: 'https://trinodb.github.io/charts'
+    targetRevision: 0.12.0
+    # helm:
+    #   valueFiles:
+    #     - values.yaml
+    helm:
+      values: |
+        server:
+          config:
+            authenticationType: "PASSWORD"
+        auth:
+          passwordAuth: "sunny:$2y$05$RuR20qaqB4bxgjdcxHpuhul3VZYcx/XgI5sJ124ZxBvk9yUHNr5X6"
+        service:
+          type: ClusterIP
+          port: 8080
+    chart: trino
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+
+
+
+  # project: default
+  # source:
+  #   repoURL: https://trinodb.github.io/charts/
+  #   chart: trino
+  #   targetRevision: 0.12.0
+  #   helm:
+  #   valueFiles:
+  #     - values.yaml
+    # helm:
+    #   # Original values: https://artifacthub.io/packages/helm/trino/trino?modal=values
+    #   values: |
+    #     auth:
+    #       existingSecret: "mariadb-dev"
+    #     primary:
+    #       persistence:
+    #         enabled: true
+    #         existingClaim: "digital-platform-prod-mariadb-dev-pvc"
+    #       service:
+    #         type: LoadBalancer
+    #         annotations:
+    #           service.beta.kubernetes.io/aws-load-balancer-name: mariadb-dev
+    #           service.beta.kubernetes.io/aws-load-balancer-scheme: "internal"
+    #           service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
+    #           service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    #           service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+    #           service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true
+    #           service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0238dc1d6b3a438ac, subnet-0abbd7fff89eb18b2
+    #           service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "false"
+    #           external-dns.alpha.kubernetes.io/hostname: "mariadb.dev.digital.argano.com"
+    #         ports:
+    #           mysql: 3306
+    #           metrics: 9104
+    #     volumePermissions:
+    #       ## @param volumePermissions.enabled Enable init container that changes the owner and group of the persistent volume(s) mountpoint to `runAsUser:fsGroup`
+    #       enabled: true
+
+  # syncPolicy:
+  #   syncOptions:
+  #   - CreateNamespace=true

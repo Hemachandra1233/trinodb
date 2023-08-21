@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-bootstrapper
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Hemachandra1233/trinodb.git
+    targetRevision: master
+    path: dev
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-trino
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
