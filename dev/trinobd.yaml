@@ -36,9 +36,19 @@ spec:
       values: |
         server:
           config:
-            authenticationType: "PASSWORD"
+            authenticationType: "password"
         auth:
           passwordAuth: "sunny:$2y$05$RuR20qaqB4bxgjdcxHpuhul3VZYcx/XgI5sJ124ZxBvk9yUHNr5X6"
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            nginx.ingress.kubernetes.io/rewrite-target: /
+          hosts:
+            - host: hello-world.info
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
     chart: trino
   syncPolicy:
     automated:
