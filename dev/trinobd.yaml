@@ -39,9 +39,6 @@ spec:
             authenticationType: "PASSWORD"
         auth:
           passwordAuth: "sunny:$2y$05$RuR20qaqB4bxgjdcxHpuhul3VZYcx/XgI5sJ124ZxBvk9yUHNr5X6"
-        service:
-          type: ClusterIP
-          port: 8080
     chart: trino
   syncPolicy:
     automated:
