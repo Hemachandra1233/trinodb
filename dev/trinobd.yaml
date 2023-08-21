@@ -34,11 +34,6 @@ spec:
       # Original values: https://github.com/bitnami/charts/blob/master/bitnami/mariadb/values.yaml
       # Values for chart ver. 11.3.5: https://github.com/bitnami/charts/blob/083156065d81553de91ca837b173e62111031f65/bitnami/mariadb/values.yaml
       values: |
-        server:
-          config:
-            authenticationType: "password"
-        auth:
-          passwordAuth: "sunny:$2y$05$RuR20qaqB4bxgjdcxHpuhul3VZYcx/XgI5sJ124ZxBvk9yUHNr5X6"
         ingress:
           enabled: true
           className: nginx
@@ -97,3 +92,9 @@ spec:
   # syncPolicy:
   #   syncOptions:
   #   - CreateNamespace=true
+
+  # server:
+  #         config:
+  #           authenticationType: "password"
+  #       auth:
+  #         passwordAuth: "sunny:$2y$05$RuR20qaqB4bxgjdcxHpuhul3VZYcx/XgI5sJ124ZxBvk9yUHNr5X6"
