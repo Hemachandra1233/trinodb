@@ -20,7 +20,19 @@ spec:
     # helm:
     #   valueFiles:
     #     - values.yaml
+    # helm:
+    #   values: |
+    #     server:
+    #       config:
+    #         authenticationType: "PASSWORD"
+    #     auth:
+    #       passwordAuth: "sunny:$2y$05$RuR20qaqB4bxgjdcxHpuhul3VZYcx/XgI5sJ124ZxBvk9yUHNr5X6"
+    #     service:
+    #       type: ClusterIP
+    #       port: 8080
     helm:
+      # Original values: https://github.com/bitnami/charts/blob/master/bitnami/mariadb/values.yaml
+      # Values for chart ver. 11.3.5: https://github.com/bitnami/charts/blob/083156065d81553de91ca837b173e62111031f65/bitnami/mariadb/values.yaml
       values: |
         server:
           config:
